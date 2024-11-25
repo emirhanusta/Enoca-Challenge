@@ -62,5 +62,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>enoca-challenge</finalName>
 	</build>
 </project>

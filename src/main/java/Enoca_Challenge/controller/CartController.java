@@ -1,4 +1,4 @@
-package Enoca_Challenge.contrroller;
+package Enoca_Challenge.controller;
 
 import Enoca_Challenge.dto.request.CartItemRequest;
 import Enoca_Challenge.dto.response.CartResponse;

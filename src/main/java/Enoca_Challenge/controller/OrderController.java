@@ -1,4 +1,4 @@
-package Enoca_Challenge.contrroller;
+package Enoca_Challenge.controller;
 
 import Enoca_Challenge.dto.response.OrderResponse;
 import Enoca_Challenge.service.OrderService;

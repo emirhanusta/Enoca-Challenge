@@ -60,10 +60,10 @@ public class CartController {
         return ResponseEntity.ok(cartService.addProductToCart(request));
     }
 
-    @PostMapping("/remove")
+    @PostMapping("/reduce")
     @Operation(
             method = "POST",
-            summary = "Remove a product from the cart",
+            summary = "Reduce the quantity of a product in the cart or remove it",
             description = "Decreases the quantity of a product in the cart or removes it if the quantity becomes zero.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Product removed from cart successfully",
@@ -74,13 +74,13 @@ public class CartController {
                             content = @Content(schema = @Schema(hidden = true)))
             }
     )
-    public ResponseEntity<CartResponse> removeProductFromCart(@Valid @RequestBody CartItemRequest request) {
-        return ResponseEntity.ok(cartService.removeProductFromCart(request));
+    public ResponseEntity<CartResponse> reduceProductQuantity(@Valid @RequestBody CartItemRequest request) {
+        return ResponseEntity.ok(cartService.reduceProductQuantity(request));
     }
 
-    @PostMapping("/remove-item")
+    @DeleteMapping("/remove-item")
     @Operation(
-            method = "POST",
+            method = "DELETE",
             summary = "Remove a product from the cart",
             description = "Decreases the quantity of a product in the cart or removes it if the quantity becomes zero.",
             responses = {
@@ -92,8 +92,9 @@ public class CartController {
                             content = @Content(schema = @Schema(hidden = true)))
             }
     )
-    public ResponseEntity<CartResponse> removeItemFromCart(@Valid @RequestBody CartItemRequest request) {
-        return ResponseEntity.ok(cartService.removeItemFromCart(request));
+    public ResponseEntity<Void> removeItemFromCart(@Valid @RequestBody CartItemRequest request) {
+        cartService.removeItemFromCart(request);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{customerId}")

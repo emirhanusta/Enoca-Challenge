@@ -60,7 +60,7 @@ public class CartService {
         return CartResponse.from(cartRepository.save(cart));
     }
 
-    public CartResponse removeProductFromCart(CartItemRequest request) {
+    public CartResponse reduceProductQuantity(CartItemRequest request) {
         log.info("Removing product with ID: {} from cart for customer with ID: {}", request.productId(), request.customerId());
         Cart cart = findByCustomerId(request.customerId());
 
@@ -88,7 +88,7 @@ public class CartService {
         log.info("Cart emptied successfully for customer with ID: {}", customerId);
     }
 
-    public CartResponse removeItemFromCart(CartItemRequest request) {
+    public void removeItemFromCart(CartItemRequest request) {
         log.info("Removing item with product ID: {} from cart for customer with ID: {}", request.productId(), request.customerId());
         Cart cart = findByCustomerId(request.customerId());
 
@@ -98,8 +98,6 @@ public class CartService {
 
         updateCartTotal(cart);
         log.info("Item with product ID: {} removed successfully from cart for customer with ID: {}", request.productId(), request.customerId());
-
-        return CartResponse.from(cartRepository.save(cart));
     }
 
     private void checkIfStockIsAvailable(Cart cart) {

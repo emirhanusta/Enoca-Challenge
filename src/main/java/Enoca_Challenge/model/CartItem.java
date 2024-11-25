@@ -12,10 +12,10 @@ public class CartItem extends BaseEntity {
     private Integer quantity;
     private BigDecimal priceAtTime;
 
-    public CartItem(Product product, Integer quantity, BigDecimal multiply) {
+    public CartItem(Product product, Integer quantity, BigDecimal priceAtTime) {
         this.product = product;
         this.quantity = quantity;
-        this.priceAtTime = multiply;
+        this.priceAtTime = priceAtTime;
     }
 
     public CartItem() {
@@ -40,4 +40,5 @@ public class CartItem extends BaseEntity {
     public void setPriceAtTime(BigDecimal priceAtTime) {
         this.priceAtTime = priceAtTime;
     }
+
 }

@@ -13,16 +13,22 @@ class CustomerRepositoryTest extends BaseRepositoryTest{
 
     @Test
     void shouldSaveCustomer() {
+        // arrange
         Customer customer = new Customer();
+        // act
         Customer savedCustomer = customerRepository.save(customer);
+        // assert
         assertNotNull(savedCustomer.getId());
     }
 
     @Test
     void shouldFindCustomerById() {
+        // arrange
         Customer customer = new Customer();
         Customer savedCustomer = customerRepository.save(customer);
+        // act
         Customer foundCustomer = customerRepository.findById(savedCustomer.getId()).orElse(null);
+        // assert
         assertNotNull(foundCustomer);
     }
 }

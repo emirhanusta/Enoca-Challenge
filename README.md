@@ -46,4 +46,4 @@ You can reach the swagger-ui via  `http://{HOST}:8080/swagger-ui/index.html`
 ---
 
 ## Screenshot
-![image](https://github.com/user-attachments/assets/842ac110-dfca-4ee7-895f-5be135273683)
+![image](https://github.com/user-attachments/assets/a6335dd7-96ba-4cd4-b08f-88dcd6240923)

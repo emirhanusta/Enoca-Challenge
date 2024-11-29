@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/customers")
-@Tag(name = "Customer Api v1", description = "It provides the functionality to manage customers")
+@Tag(name = "Customer API v1", description = "Endpoints for managing customer operations such as adding new customers.")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -27,15 +27,27 @@ public class CustomerController {
     @PostMapping
     @Operation(
             method = "POST",
-            summary = "Add a new customer",
-            description = "Add a new customer to the system",
+            summary = "Register a new customer",
+            description = """
+                    Adds a new customer to the system.\s
+                    The request should include all necessary customer details such as name, email, and contact information.
+                    """,
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Customer added successfully",
-                    content = @Content(schema = @Schema(implementation = CustomerResponse.class))),
-                    @ApiResponse(responseCode = "400", description = "Invalid request",
-                    content = @Content(schema = @Schema(hidden = true))),
-                    @ApiResponse(responseCode = "500", description = "Internal server error",
-                    content = @Content(schema = @Schema(hidden = true)))
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Customer successfully registered",
+                            content = @Content(schema = @Schema(implementation = CustomerResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid request due to missing or incorrect data",
+                            content = @Content(schema = @Schema(hidden = true))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content(schema = @Schema(hidden = true))
+                    )
             }
     )
     public ResponseEntity<CustomerResponse> addCustomer(@Valid @RequestBody CustomerRequest customerRequest) {

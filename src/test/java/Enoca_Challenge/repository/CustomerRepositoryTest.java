@@ -31,4 +31,14 @@ class CustomerRepositoryTest extends BaseRepositoryTest{
         // assert
         assertNotNull(foundCustomer);
     }
+
+    @Test
+    void shouldNotFindCustomerById() {
+        // arrange
+        Long id = 1L;
+        // act
+        Customer foundCustomer = customerRepository.findById(id).orElse(null);
+        // assert
+        assertNull(foundCustomer);
+    }
 }

@@ -41,4 +41,7 @@ public class CartItem extends BaseEntity {
         this.priceAtTime = priceAtTime;
     }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

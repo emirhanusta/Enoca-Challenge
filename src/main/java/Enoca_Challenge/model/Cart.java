@@ -36,4 +36,7 @@ public class Cart extends BaseEntity {
         this.totalPrice = totalPrice;
     }
 
+    public void setCartItems(List<CartItem> objects) {
+        this.cartItems = objects;
+    }
 }

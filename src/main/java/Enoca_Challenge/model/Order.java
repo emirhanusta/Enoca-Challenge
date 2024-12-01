@@ -30,8 +30,16 @@ public class Order extends BaseEntity {
     public void generateOrderCode() {
         this.code = "ORDER-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
     public Customer getCustomer() {
         return customer;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public List<OrderItem> getOrderItems() {
@@ -45,5 +53,6 @@ public class Order extends BaseEntity {
     public String getCode() {
         return code;
     }
+
 }
 

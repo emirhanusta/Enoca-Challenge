@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -22,84 +24,79 @@ public class CustomerServiceTest extends BaseServiceTest{
     private CustomerRepository customerRepository;
 
     @Test
-    void shouldReturn_CustomerResponse_WhenAddCustomer() {
-        // given
+    void shouldReturnCustomerResponse_whenAddCustomer() {
+        // arrange
         CustomerRequest customerRequest = new CustomerRequest(
                 "name",
                 "e@e.e"
         );
-
         Customer customer = CustomerRequest.from(customerRequest);
 
         when(customerRepository.save(any(Customer.class))).thenReturn(customer);
-
-        // when
+        // act
         CustomerResponse customerResponse = customerService.addCustomer(customerRequest);
 
-        // then
+        // assert
         assertEquals(customer.getName(), customerResponse.name());
     }
 
     @Test
-    void shouldReturn_Customer_WhenGetCustomerByIdAndCustomerExists() {
-        // given
+    void shouldReturnCustomer_whenGetCustomerByIdAndCustomerExists() {
+        // arrange
         Long id = 1L;
         Customer customer = new Customer(
                 "name",
                 "e@e.e"
         );
-        customer.setId(id);
 
-        when(customerRepository.findById(id)).thenReturn(java.util.Optional.of(customer));
+        when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
-        // when
+        // act
         Customer result = customerService.getCustomerById(id);
 
-        // then
+        // assert
         assertEquals(customer, result);
     }
 
     @Test
-    void shouldThrow_CustomerNotFoundException_WhenGetCustomerByIdAndCustomerNotExists() {
-        // given
+    void shouldThrowCustomerNotFoundException_whenGetCustomerByIdAndCustomerNotExists() {
+        // arrange
         Long id = 1L;
 
-        when(customerRepository.findById(id)).thenReturn(java.util.Optional.empty());
+        when(customerRepository.findById(id)).thenReturn(Optional.empty());
 
-        // when
+        // act
         CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class, () -> customerService.getCustomerById(id));
 
-        // then
+        // assert
         assertEquals("Customer with id " + id + " not found", exception.getMessage());
     }
 
     @Test
     void shouldThrow_CustomerNotFoundException_WhenValidateCustomerExistsAndCustomerNotExists() {
-        // given
+        // arrange
         Long id = 1L;
 
         when(customerRepository.findById(id)).thenReturn(java.util.Optional.empty());
 
-        // when
+        // act
         CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class, () -> customerService.validateCustomerExists(id));
 
-        // then
+        // assert
         assertEquals("Customer with id " + id + " not found", exception.getMessage());
     }
 
     @Test
-    void shouldNotThrow_CustomerNotFoundException_WhenValidateCustomerExistsAndCustomerExists() {
-        // given
+    void shouldNotThrowCustomerNotFoundException_WhenValidateCustomerExistsAndCustomerExists() {
+        // arrange
         Long id = 1L;
         Customer customer = new Customer(
                 "name",
                 "e@e.e"
         );
-        customer.setId(id);
+        when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
-        when(customerRepository.findById(id)).thenReturn(java.util.Optional.of(customer));
-
-        // when
+        // act & assert
         assertDoesNotThrow(() -> customerService.validateCustomerExists(id));
     }
 }

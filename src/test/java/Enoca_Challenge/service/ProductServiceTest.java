@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,7 +25,7 @@ public class ProductServiceTest extends BaseServiceTest {
     private ProductRepository productRepository;
 
     @Test
-    void itShouldReturnProductResponse_WhenCreateProduct() {
+    void shouldReturnProductResponse_WhenCreateProduct() {
         // arrange
         ProductRequest productRequest = new ProductRequest(
                 "product name",
@@ -43,7 +44,7 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldReturnProductResponse_WhenGetProductByIdAndProductExists() {
+    void shouldReturnProductResponse_WhenGetProductByIdAndProductExists() {
         // arrange
         Long id = 1L;
         Product product = new Product(
@@ -51,8 +52,7 @@ public class ProductServiceTest extends BaseServiceTest {
                 BigDecimal.TEN,
                 10
         );
-        product.setId(id);
-        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(java.util.Optional.of(product));
+        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(Optional.of(product));
 
         // act
         ProductResponse result = productService.getProduct(id);
@@ -63,10 +63,10 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldThrowProductNotFoundException_WhenGetProductByIdAndProductNotExists() {
+    void shouldThrowProductNotFoundException_WhenGetProductByIdAndProductNotExists() {
         // arrange
         Long id = 1L;
-        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(java.util.Optional.empty());
+        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(Optional.empty());
 
         // act
         Exception exception = assertThrows(ProductNotFoundException.class, () -> productService.getProduct(id));
@@ -76,7 +76,7 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldReturnProductResponse_WhenUpdateProduct() {
+    void shouldReturnProductResponse_WhenUpdateProduct() {
         // arrange
         Long id = 1L;
         ProductRequest productRequest = new ProductRequest(
@@ -85,9 +85,8 @@ public class ProductServiceTest extends BaseServiceTest {
                 10
         );
         Product product = ProductRequest.from(productRequest);
-        product.setId(id);
 
-        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(java.util.Optional.of(product));
+        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(Optional.of(product));
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
         // act
@@ -99,7 +98,7 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldThrowProductNotFoundException_WhenUpdateProductAndProductNotExists() {
+    void shouldThrowProductNotFoundException_WhenUpdateProductAndProductNotExists() {
         // arrange
         Long id = 1L;
         ProductRequest productRequest = new ProductRequest(
@@ -107,7 +106,7 @@ public class ProductServiceTest extends BaseServiceTest {
                 BigDecimal.TEN,
                 10
         );
-        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(java.util.Optional.empty());
+        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(Optional.empty());
 
         // act
         Exception exception = assertThrows(ProductNotFoundException.class, () -> productService.updateProduct(id, productRequest));
@@ -117,7 +116,7 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldDeleteProduct_WhenDeleteProduct() {
+    void shouldDeleteProduct_WhenDeleteProduct() {
         // arrange
         Long id = 1L;
         Product product = new Product(
@@ -125,8 +124,8 @@ public class ProductServiceTest extends BaseServiceTest {
                 BigDecimal.TEN,
                 10
         );
-        product.setId(id);
-        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(java.util.Optional.of(product));
+
+        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(Optional.of(product));
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
         // act
@@ -137,10 +136,10 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldThrowProductNotFoundException_WhenDeleteProductAndProductNotExists() {
+    void shouldThrowProductNotFoundException_WhenDeleteProductAndProductNotExists() {
         // arrange
         Long id = 1L;
-        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(java.util.Optional.empty());
+        when(productRepository.findByIdAndIsDeletedFalse(id)).thenReturn(Optional.empty());
 
         // act
         Exception exception = assertThrows(ProductNotFoundException.class, () -> productService.deleteProduct(id));
@@ -150,15 +149,14 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void itShouldReduceStock_WhenReduceStock() {
+    void shouldReduceStock_WhenReduceStock() {
         // arrange
-        Long id = 1L;
         Product product = new Product(
                 "product name",
                 BigDecimal.TEN,
                 10
         );
-        product.setId(id);
+
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
         // act

@@ -45,4 +45,16 @@ class ProductRepositoryTest extends BaseRepositoryTest {
         // assert
         assertTrue(optionalProduct.isEmpty());
     }
+
+    @Test
+    void shouldUpdateProduct() {
+        // arrange
+        Product product = new Product();
+        productRepository.save(product);
+        // act
+        product.setName("new name");
+        Product updatedProduct = productRepository.save(product);
+        // assert
+        assertEquals("new name", updatedProduct.getName());
+    }
 }

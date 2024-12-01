@@ -29,6 +29,9 @@ class OrderServiceTest extends BaseServiceTest{
     private CartService cartService;
 
     @Mock
+    private ProductService productService;
+
+    @Mock
     private CustomerService customerService;
 
     @InjectMocks
